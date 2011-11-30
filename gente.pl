@@ -3,6 +3,16 @@ use Mojolicious::Lite;
 use Net::LDAP;
 use Net::LDAP::Extension::SetPassword;
 
+# if someone is using mod_rewrite to hide the script file name
+# generate urls that reflect that
+hook before_dispatch => sub {
+  my $self = shift;
+  my $base = $self->req->env->{SCRIPT_URI};
+  if ($base) {
+    $self->req->url->base( Mojo::URL->new($base) );
+  }
+}
+
 my $config = plugin 'JSONConfig' => { file => 'gente.json' };
 
 get '/' => sub {
