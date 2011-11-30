@@ -11,7 +11,7 @@ hook before_dispatch => sub {
   if ($base) {
     $self->req->url->base( Mojo::URL->new($base) );
   }
-}
+};
 
 my $config = plugin 'JSONConfig' => { file => 'gente.json' };
 
