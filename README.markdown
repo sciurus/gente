@@ -9,7 +9,7 @@ Gente is configured by editing the values in gente.json. All four entries are ma
   * cafile: the certificate used to validate your LDAP server during TLS negotiation
   * title: the name of your gente installation as seen by your users
 
-Gente is written in Perl using the excellent mojolicious framework. Mojolicious supports running as a CGI script or through hypnotoad, its built-in web server. Mojolicious also supports PSGI, which lets you run gente via mod_perl, FastCGI, SCGI, or any PSGI application server. See the [mojolicious documentation](http://mojolicio.us/perldoc) for more information.
+Gente is written in Perl using the excellent mojolicious framework. Mojolicious supports running as a CGI script or through hypnotoad, its built-in web server. Mojolicious also supports PSGI, which lets you run gente via modperl, FastCGI, SCGI, or any PSGI application server. See the [mojolicious documentation](http://mojolicio.us/perldoc) for more information. There is an example configuration for running Gente via CGI in gente-apache2.markdown
 
 ## Requirements
   * Mojolicious
