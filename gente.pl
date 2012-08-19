@@ -24,9 +24,10 @@ get '/' => sub {
 post '/' => sub {
   my $self = shift;
 
-  my $server = $config->{server};
-  my $dn     = $config->{dn};
-  my $cafile = $config->{cafile};
+  my $server  = $config->{server};
+  my $timeout = $config->{timeout};
+  my $dn      = $config->{dn};
+  my $cafile  = $config->{cafile};
   $self->stash( title => $config->{title} );
 
   my $username = $self->param('username');
@@ -36,12 +37,12 @@ post '/' => sub {
   my $error;
   my $result;
 
-  my $ldap = Net::LDAP->new($server);
+  my $ldap = Net::LDAP->new( $server, timeout => $timeout );
   if ( not $ldap ) {
     $error = "Unable to connect to $server";
     $self->app->log->error($error);
     $result = 'An internal error occured';
-    $self->render_exception($result);
+    $self->render( 'feedback', status => 500, result => $result );
     return;
   }
 
@@ -52,7 +53,7 @@ post '/' => sub {
     $error = "Unable to start TLS to $server using $cafile";
     $self->app->log->error($error);
     $result = 'An internal error occured';
-    $self->render_exception($result);
+    $self->render( 'feedback', status => 500, result => $result );
     return;
   }
 
@@ -62,8 +63,9 @@ post '/' => sub {
   if ( $mesg->code ) {
     $error = "Unable to bind as $username. Server says " . $mesg->error;
     $self->app->log->info($error);
-    $result = 'Unable to change your password. Try again or get help.';
-    $self->render_exception($result);
+    $result =
+'Unable to change your password. Maybe your old password is not correct? Try again or get help.';
+    $self->render( 'feedback', result => $result );
     return;
   }
 

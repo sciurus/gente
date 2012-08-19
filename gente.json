@@ -1,5 +1,6 @@
 {
   "server": "ldap.example.com",
+  "timeout": 10,
   "dn": "ou=People,dc=example,dc=com",
   "cafile": "/etc/pki/tls/certs/example.crt",
   "title": "Gente LDAP Password Changer"
