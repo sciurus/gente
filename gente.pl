@@ -3,6 +3,10 @@ use Mojolicious::Lite;
 use Net::LDAP;
 use Net::LDAP::Extension::SetPassword;
 
+my $config = plugin 'JSONConfig' => { file => 'gente.json' };
+
+app->secrets($config->{secret});
+
 # if someone is using mod_rewrite to hide the script file name
 # generate urls that reflect that
 hook before_dispatch => sub {
@@ -12,8 +16,6 @@ hook before_dispatch => sub {
     $self->req->url->base( Mojo::URL->new($base) );
   }
 };
-
-my $config = plugin 'JSONConfig' => { file => 'gente.json' };
 
 get '/' => sub {
   my $self = shift;
