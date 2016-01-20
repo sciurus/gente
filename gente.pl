@@ -2,10 +2,9 @@
 use Mojolicious::Lite;
 use Net::LDAP;
 use Net::LDAP::Extension::SetPassword;
+app->log->level('fatal'); # will set level again, below, after parsing config
 
 my $config = plugin 'JSONConfig' => { file => 'gente.json' };
-
-app->secrets($config->{secret});
 
 # if someone is using mod_rewrite to hide the script file name
 # generate urls that reflect that
@@ -86,6 +85,8 @@ post '/' => sub {
 
 };
 
+app->secrets($config->{secret});
+app->log->level($config->{log_level});
 app->start;
 __DATA__
 
