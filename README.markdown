@@ -1,3 +1,6 @@
+# NOTICE
+The canonical source for this project is now [the EupathDB fork](https://github.com/EuPathDB/gente)
+
 ## Description
 Gente is a web application for self-service LDAP password changes.
 
